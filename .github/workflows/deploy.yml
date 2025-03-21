@@ -17,11 +17,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-<<<<<<< HEAD
 
-=======
- 
->>>>>>> bd1e9d3b (new repo)
       - name: Authenticate with Google Cloud
         uses: google-github-actions/auth@v2
         with:
