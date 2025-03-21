@@ -12,6 +12,8 @@ app.use(express.json({ limit: '50mb' }))
 app.use("/upload", uploadRoutes); // <-- Move this before express.json()
 // app.use("/webinar", webinarRoutes);
  // <-- Move this down
-
+ app.get("/", (req, res) => {
+    res.send("Backend server is running!"); // Or any message you want to display
+  });
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
