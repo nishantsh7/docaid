@@ -1,0 +1,66 @@
+name: Deploy MERN App to Google Cloud Run
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy Backend & Frontend to Google Cloud Run
+    runs-on: ubuntu-latest
+
+    env:
+      PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+      REPO_NAME: ${{ secrets.GCP_REPO_NAME }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+<<<<<<< HEAD
+
+=======
+ 
+>>>>>>> bd1e9d3b (new repo)
+      - name: Authenticate with Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SERVICE_KEY }}
+
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ env.PROJECT_ID }}
+
+      - name: Configure Docker Authentication
+        run: gcloud auth configure-docker asia-south2-docker.pkg.dev
+
+      # 🚀 Build & Push Backend Image
+      - name: Build and Push Backend Docker Image
+        run: |
+          docker build -t asia-south2-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/backend:latest ./backend
+          docker push asia-south2-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/backend:latest
+
+      # 🚀 Build & Push Frontend Image
+      - name: Build and Push Frontend Docker Image
+        run: |
+          docker build -t asia-south2-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/frontend:latest ./frontend
+          docker push asia-south2-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/frontend:latest
+
+      # 🚀 Deploy Backend to Cloud Run
+      - name: Deploy Backend to Cloud Run
+        run: |
+          gcloud run deploy backend-service \
+            --image asia-south2-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/backend:latest \
+            --region asia-south2 \
+            --platform managed \
+            --allow-unauthenticated
+
+      # 🚀 Deploy Frontend to Cloud Run
+      - name: Deploy Frontend to Cloud Run
+        run: |
+          gcloud run deploy frontend-service \
+            --image asia-south2-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/frontend:latest \
+            --region asia-south2 \
+            --platform managed \
+            --allow-unauthenticated
