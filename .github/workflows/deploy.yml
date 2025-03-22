@@ -13,6 +13,13 @@ jobs:
     env:
       PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
       REPO_NAME: ${{ secrets.GCP_REPO_NAME }}
+      LOCATION: ${{ secrets.GCP_LOCATION }}
+      OCR_ID: ${{ secrets.GCP_OCR_ID }}
+      PROCESSOR_ID: ${{ secrets.GCP_PROCESSOR_ID}}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY}}
+      INVOICE_ID: ${{ secrets.GCP_INVOICE_ID}}
+      
+
 
     steps:
       - name: Checkout code
