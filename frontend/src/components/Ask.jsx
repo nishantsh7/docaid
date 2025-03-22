@@ -7,6 +7,7 @@ const Ask = ({ file }) => {
   const [loading, setLoading] = useState(false);
   const [answer, setAnswer] = useState("");
   const [error, setError] = useState(null);
+   const backendUrl = "https://backend-service-964145945663.asia-south2.run.app/";
 
   const handleQuestion = async (e, action) => {
     e.stopPropagation(); // Prevent event bubbling
@@ -27,7 +28,7 @@ const Ask = ({ file }) => {
       formData.append("question", question);
 
       const response = await axios.post(
-        `http://localhost:8080/upload`,
+        `${backendUrl}/upload`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },

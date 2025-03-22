@@ -8,6 +8,7 @@ const Speak = ({file}) => {
     const handleSubmit = async (event, action) => {
         event.stopPropagation(); // Prevent event bubbling
         event.preventDefault(); // Stop form submission behavior
+        const backendUrl = "https://backend-service-964145945663.asia-south2.run.app/"
     
         if (!file) {
           console.error("No file selected");
@@ -19,9 +20,10 @@ const Speak = ({file}) => {
           const formData = new FormData();
           formData.append("file", file);
           formData.append("action", action); // Pass action in formData
+          // http://localhost:8080/upload
     
           const response = await axios.post(
-            `http://localhost:8080/upload`,
+            `${backendUrl}/upload`,
             formData,
             {
               headers: { "Content-Type": "multipart/form-data" },

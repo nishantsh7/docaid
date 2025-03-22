@@ -24,6 +24,8 @@ export default function DocumentAIApp() {
   const [time, setTime] = useState("");
   const [speaker, setSpeaker] = useState("");
 
+  const backendUrl = "https://backend-service-964145945663.asia-south2.run.app/";
+
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
   };
@@ -45,7 +47,7 @@ export default function DocumentAIApp() {
       formData.append("file", file);
       formData.append("action", action); // Pass action in formData
       const response = await axios.post(
-        `http://localhost:8080/upload`,
+        `${backendUrl}/upload`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
