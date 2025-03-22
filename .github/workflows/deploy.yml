@@ -18,7 +18,7 @@ jobs:
       PROCESSOR_ID: ${{ secrets.GCP_PROCESSOR_ID}}
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY}}
       INVOICE_ID: ${{ secrets.GCP_INVOICE_ID}}
-      
+
 
 
     steps:
@@ -57,7 +57,8 @@ jobs:
             --image asia-south2-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/backend:latest \
             --region asia-south2 \
             --platform managed \
-            --allow-unauthenticated
+            --allow-unauthenticated \
+            --set-env-vars="GCP_PROJECT_ID=$PROJECT_ID,GCP_LOCATION=$LOCATION,GCP_PROCESSOR_ID=$PROCESSOR_ID,GCP_OCR_ID=$OCR_ID,GCP_INVOICE_ID=$INVOICE_ID,GEMINI_API_KEY=$GEMINI_API_KEY"
 
       # 🚀 Deploy Frontend to Cloud Run
       - name: Deploy Frontend to Cloud Run
