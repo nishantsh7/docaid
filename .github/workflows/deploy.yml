@@ -50,20 +50,20 @@ jobs:
           docker build -t asia-south2-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/frontend:latest ./frontend
           docker push asia-south2-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/frontend:latest
 
-      # 🚀 Deploy Backend to Cloud Run
-      # - name: Deploy Backend to Cloud Run
-      #   run: |
-      #     gcloud run deploy backend-service \
-      #       --image asia-south2-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/backend:latest \
-      #       --region asia-south2 \
-      #       --platform managed \
-      #       --allow-unauthenticated \
-      #       --set-env-vars="GCP_PROJECT_ID=$PROJECT_ID,GCP_LOCATION=$LOCATION,GCP_PROCESSOR_ID=$PROCESSOR_ID,GCP_OCR_ID=$OCR_ID,GCP_INVOICE_ID=$INVOICE_ID,GEMINI_API_KEY=$GEMINI_API_KEY"
+       #Deploy Backend to Cloud Run
+      - name: Deploy Backend to Cloud Run
+        run: |
+          gcloud run deploy backend-service \
+            --image asia-south2-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/backend:latest \
+            --region asia-south2 \
+            --platform managed \
+            --allow-unauthenticated \
+            --set-env-vars="GCP_PROJECT_ID=$PROJECT_ID,GCP_LOCATION=$LOCATION,GCP_PROCESSOR_ID=$PROCESSOR_ID,GCP_OCR_ID=$OCR_ID,GCP_INVOICE_ID=$INVOICE_ID,GEMINI_API_KEY=$GEMINI_API_KEY"
 
       # 🚀 Deploy Frontend to Cloud Run
       - name: Deploy Frontend to Cloud Run
         run: |
-          gcloud run deploy frontend-service2 \
+          gcloud run deploy doc.aid \
             --image asia-south2-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/frontend:latest \
             --region asia-south2 \
             --platform managed \
