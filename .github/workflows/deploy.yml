@@ -63,7 +63,7 @@ jobs:
       # 🚀 Deploy Frontend to Cloud Run
       - name: Deploy Frontend to Cloud Run
         run: |
-          gcloud run deploy doc.aid \
+          gcloud run deploy doc-aid \
             --image asia-south2-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/frontend:latest \
             --region asia-south2 \
             --platform managed \
