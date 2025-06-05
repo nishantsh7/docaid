@@ -6,7 +6,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 async function analyzeDocumentAndSuggestVoice(text) {
-  const apiKey = process.env.GEMINI_API_KEY; // Replace with your actual API key
+  const apiKey = process.env.GEMINI_API_KEY; 
   const genAI = new GoogleGenerativeAI(apiKey);
 
   const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
