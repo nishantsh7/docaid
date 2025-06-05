@@ -41,17 +41,19 @@ jobs:
       # 🚀 Build & Push Backend Image
       - name: Build and Push Backend Docker Image
         run: |
-          docker buildx build --push \
-           -tag asia-south2-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/backend:latest \
-           ./backend
+          docker buildx build ./backend \
+           --tag asia-south2-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/backend:latest \
+           --push
+           
       #    docker push asia-south2-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/backend:latest
 
       # 🚀 Build & Push Frontend Image
       - name: Build and Push Frontend Docker Image
         run: |
-          docker buildx build --push \
+          docker buildx build ./frontend \
            --tag asia-south2-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/frontend:latest \
-           ./frontend
+           --push
+           
       #   docker push asia-south2-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/frontend:latest
 
        #Deploy Backend to Cloud Run
