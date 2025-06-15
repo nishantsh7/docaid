@@ -37,13 +37,10 @@ jobs:
         run: gcloud auth configure-docker asia-south2-docker.pkg.dev
 
       - name: Set up Docker Buildx
-        # This action ensures Docker Buildx is properly initialized and available.
         uses: docker/setup-buildx-action@v2
 
       # --- Backend Deployment ---
       - name: Verify Backend Directory Exists
-        # Check if the './backend' directory exists before attempting to build.
-        # This helps catch issues if the directory path is incorrect or missing.
         run: |
           if [ ! -d "./backend" ]; then
             echo "Error: Backend directory './backend' not found at $(pwd)"
@@ -52,15 +49,24 @@ jobs:
           echo "Backend directory './backend' found. Proceeding with build."
 
       - name: Build and Push Backend Docker Image
-        # Builds the Docker image for the backend and pushes it to Google Artifact Registry.
-        # We're using a shell variable for the tag and explicit quoting for robustness.
         run: |
+          # Verify that critical environment variables are not empty
+          if [ -z "${{ env.PROJECT_ID }}" ]; then
+            echo "Error: GCP_PROJECT_ID secret is empty or not set. Please check your GitHub repository secrets."
+            exit 1
+          fi
+          if [ -z "${{ env.REPO_NAME }}" ]; then
+            echo "Error: GCP_REPO_NAME secret is empty or not set. Please check your GitHub repository secrets."
+            exit 1
+          fi
+
           BACKEND_IMAGE_TAG="asia-south2-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/backend:latest"
-          echo "--- Debugging Backend Build Command ---"
+          
+          echo "--- Debugging Backend Build Command (Unredacted) ---"
+          echo "Raw PROJECT_ID: '${{ env.PROJECT_ID }}'"
+          echo "Raw REPO_NAME: '${{ env.REPO_NAME }}'"
           echo "Full command to be executed: docker buildx build ./backend --tag \"$BACKEND_IMAGE_TAG\" --push"
-          echo "PROJECT_ID: ${{ env.PROJECT_ID }}"
-          echo "REPO_NAME: ${{ env.REPO_NAME }}"
-          echo "Generated Backend Image Tag: $BACKEND_IMAGE_TAG"
+          echo "Generated Backend Image Tag: \"$BACKEND_IMAGE_TAG\""
           echo "--- End Debugging ---"
           
           docker buildx build ./backend --tag "$BACKEND_IMAGE_TAG" --push
@@ -84,15 +90,23 @@ jobs:
           echo "Frontend directory './frontend' found. Proceeding with build."
 
       - name: Build and Push Frontend Docker Image
-        # Builds the Docker image for the frontend and pushes it to Google Artifact Registry.
-        # Similar to backend, using a shell variable and explicit quoting.
         run: |
+          # Verify that critical environment variables are not empty
+          if [ -z "${{ env.PROJECT_ID }}" ]; then
+            echo "Error: GCP_PROJECT_ID secret is empty or not set. Please check your GitHub repository secrets."
+            exit 1
+          fi
+          if [ -z "${{ env.REPO_NAME }}" ]; then
+            echo "Error: GCP_REPO_NAME secret is empty or not set. Please check your GitHub repository secrets."
+            exit 1
+          fi
+
           FRONTEND_IMAGE_TAG="asia-south2-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/frontend:latest"
-          echo "--- Debugging Frontend Build Command ---"
+          echo "--- Debugging Frontend Build Command (Unredacted) ---"
+          echo "Raw PROJECT_ID: '${{ env.PROJECT_ID }}'"
+          echo "Raw REPO_NAME: '${{ env.REPO_NAME }}'"
           echo "Full command to be executed: docker buildx build ./frontend --tag \"$FRONTEND_IMAGE_TAG\" --push"
-          echo "PROJECT_ID: ${{ env.PROJECT_ID }}"
-          echo "REPO_NAME: ${{ env.REPO_NAME }}"
-          echo "Generated Frontend Image Tag: $FRONTEND_IMAGE_TAG"
+          echo "Generated Frontend Image Tag: \"$FRONTEND_IMAGE_TAG\""
           echo "--- End Debugging ---"
 
           docker buildx build ./frontend --tag "$FRONTEND_IMAGE_TAG" --push
