@@ -8,7 +8,7 @@ const Speak = ({file}) => {
     const handleSubmit = async (event, action) => {
         event.stopPropagation(); // Prevent event bubbling
         event.preventDefault(); // Stop form submission behavior
-        const backendUrl = "https://backend-service-640844718290.asia-south2.run.app/"
+        const backendUrl = "https://backend-service-897243952721.asia-south2.run.app"
     
         if (!file) {
           console.error("No file selected");

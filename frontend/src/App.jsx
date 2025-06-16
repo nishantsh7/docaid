@@ -24,7 +24,7 @@ export default function DocumentAIApp() {
   const [time, setTime] = useState("");
   const [speaker, setSpeaker] = useState("");
 
-  const backendUrl = "https://backend-service-640844718290.asia-south2.run.app/";
+  const backendUrl = "https://backend-service-897243952721.asia-south2.run.app/";
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
