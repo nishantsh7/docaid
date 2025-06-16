@@ -7,7 +7,7 @@ const Ask = ({ file }) => {
   const [loading, setLoading] = useState(false);
   const [answer, setAnswer] = useState("");
   const [error, setError] = useState(null);
-   const backendUrl = "https://backend-service-640844718290.asia-south2.run.app/";
+   const backendUrl = "https://backend-service-897243952721.asia-south2.run.app";
 
   const handleQuestion = async (e, action) => {
     e.stopPropagation(); // Prevent event bubbling
